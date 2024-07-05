@@ -7,13 +7,18 @@ const Users = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "https://jsonplaceholder.typicode.com/users";
+        const url = "https://jsonplaceholder.typicode.com/users/2";
         const res = await fetch(url);
 
         // Check if the response is OK (status in the range 200-299)
         if (res.ok) {
           const result = await res.json();
-          setData(result);
+          const val = {
+            name: result.name,
+            email: result.email,
+            phone: result.phone,
+          };
+          setData([val]);
         } else {
           console.log("Promise resolved but HTTP status failed");
         }

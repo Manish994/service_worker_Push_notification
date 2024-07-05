@@ -6,6 +6,7 @@ import ViteEslint from "@nabla/vite-plugin-eslint";
 import { visualizer } from "rollup-plugin-visualizer";
 import timeReporter from "vite-plugin-time-reporter";
 import Inspect from "vite-plugin-inspect";
+import { VitePWA } from "vite-plugin-pwa";
 
 // ==============================||  CONFIGURATION SETTINGS ||============================== //
 export default defineConfig(({ command }) => {
@@ -22,6 +23,32 @@ export default defineConfig(({ command }) => {
       ViteEslint(),
       timeReporter(),
       Inspect(),
+      VitePWA({
+        registerType: "prompt",
+        manifest: {
+          name: "Shift Pixel",
+          short_name: "SHF",
+          description: "Kathmandu Chandol Nepal",
+          theme_color: "#ffffff",
+          icons: [
+            {
+              src: "1.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+            {
+              src: "2.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+            {
+              src: "3.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+          ],
+        },
+      }),
     ],
     resolve: {
       alias: {
@@ -37,9 +64,6 @@ export default defineConfig(({ command }) => {
         open: true,
         port: 3000,
         strictPort: true,
-        mimeTypes: {
-          "image/svg+xml": [".svg"],
-        },
         hmr: {
           clientPort: 3000, // Ensure the client connects to the correct port
           overlay: false, // Disable the server error overlay if desired
@@ -54,14 +78,14 @@ export default defineConfig(({ command }) => {
       build: {
         target: "esnext",
         outDir: "dist",
-        // assetsDir: "static",
+        assetsDir: "static",
         sourcemap: false,
         manifest: false,
       },
       plugins: [
         ...config.plugins,
         visualizer({
-          template: "treemap", //sunburst network
+          template: "network", //sunburst network
           open: true,
           gzipSize: true,
           brotliSize: true,
